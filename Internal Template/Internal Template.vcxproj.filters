@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="cheatskeybinds.cpp">
+      <Filter>Cheats</Filter>
+    </ClCompile>
+    <ClCompile Include="cheatsutil.cpp">
+      <Filter>Cheats</Filter>
+    </ClCompile>
+    <ClCompile Include="hookmanager.cpp">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks.cpp">
+      <Filter>Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="fly.cpp">
+      <Filter>Modules\Modules\Movement\fly</Filter>
+    </ClCompile>
+    <ClCompile Include="PyObject_SetAttrHook.cpp">
+      <Filter>Hooks\Hooks\PyObject_SetAttrHook</Filter>
+    </ClCompile>
+    <ClCompile Include="PresentHook.cpp">
+      <Filter>Hooks\Hooks\PresentHook</Filter>
+    </ClCompile>
+    <ClCompile Include="screenmanager.cpp">
+      <Filter>ScreenManager</Filter>
+    </ClCompile>
+    <ClCompile Include="screenmanager_drawfunctions.cpp">
+      <Filter>ScreenManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui.cpp">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_demo.cpp">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_draw.cpp">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_impl_win32.cpp">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_tables.cpp">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGUI\imgui_widgets.cpp">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="ImGUI\imgui_impl_dx11.cpp">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="allmodules.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="module.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="cheats.h">
+      <Filter>Cheats</Filter>
+    </ClInclude>
+    <ClInclude Include="allclasses.h">
+      <Filter>ReversedClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="hookmanager.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="hooks.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="fly.h">
+      <Filter>Modules\Modules\Movement\fly</Filter>
+    </ClInclude>
+    <ClInclude Include="PyObject_SetAttrHook.h">
+      <Filter>Hooks\Hooks\PyObject_SetAttrHook</Filter>
+    </ClInclude>
+    <ClInclude Include="PresentHook.h">
+      <Filter>Hooks\Hooks\PresentHook</Filter>
+    </ClInclude>
+    <ClInclude Include="screenmanager.h">
+      <Filter>ScreenManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imconfig.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui_impl_win32.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imgui_internal.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_rectpack.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_textedit.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGUI\imstb_truetype.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="general.h" />
+    <ClInclude Include="ImGUI\imgui_impl_dx11.h">
+      <Filter>ScreenManager\ImGUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Cheats">
+      <UniqueIdentifier>{df1068a7-906d-4ef3-815b-5e525ded4d87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hooks">
+      <UniqueIdentifier>{6fb71066-0c63-4199-a0dd-78e45567d5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ReversedClasses">
+      <UniqueIdentifier>{64f0b7d6-fe90-4826-b75e-e9792a65e4dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hooks\Hooks">
+      <UniqueIdentifier>{1cbf96f1-c666-4866-80b0-d3c27084fc83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{823a6afc-a034-4df5-8990-66114cfc5efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Modules">
+      <UniqueIdentifier>{453f33e4-ec36-4f44-9cfc-7577a0b62307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hooks\Hooks\PyObject_SetAttrHook">
+      <UniqueIdentifier>{3652a5f5-fa45-4bc7-8a4c-e0806a4944ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Modules\Movement">
+      <UniqueIdentifier>{cf95efe5-82a4-4ee6-8a2b-71beb6153485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Modules\General">
+      <UniqueIdentifier>{0e136758-8489-4786-8875-d5bc010df901}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Modules\Attack">
+      <UniqueIdentifier>{0a00d028-8ea4-457e-ab04-6034a9d209a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Modules\Visual">
+      <UniqueIdentifier>{8a189aa4-b380-4d41-8b73-127d18c72462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Modules\Movement\fly">
+      <UniqueIdentifier>{8a9a838e-4d2d-4410-86d4-0c007fbfdb00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenManager">
+      <UniqueIdentifier>{fa12b3e0-62f0-4c85-932d-65e65579fa9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenManager\ImGUI">
+      <UniqueIdentifier>{995112da-9ac9-454d-85b3-67a0ecb79089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenManager\ImGUI\Fonts">
+      <UniqueIdentifier>{130a61fc-b9c0-40f3-9740-fe508f6138f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hooks\Hooks\PresentHook">
+      <UniqueIdentifier>{6f35ecdd-5205-4a78-a658-05c5bad71c27}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="ImGUI\Fonts\RobotoCondensed-Bold.ttf">
+      <Filter>ScreenManager\ImGUI\Fonts</Filter>
+    </Font>
+  </ItemGroup>
+</Project>
