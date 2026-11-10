@@ -8,6 +8,11 @@ Cheats::Cheats()
     // Construct features
     exampleFeature = new ExampleFeature();
 
+    
+
+	// Find any needed pointers here, e.g.: players, viewatrix, weapons
+
+
     LOG("Cheats: constructed");
 }
 
