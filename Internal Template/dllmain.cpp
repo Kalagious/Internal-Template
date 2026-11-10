@@ -9,6 +9,8 @@ DWORD APIENTRY CheatThread(HMODULE hModule)
     SetConsoleTitleA("Cheat Debug");
 
     mainCode(hModule);
+
+    FreeConsole();
     return 0;
 }
 

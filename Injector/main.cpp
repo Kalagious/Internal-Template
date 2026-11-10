@@ -7,7 +7,7 @@
 // ---------------------------------------------------------
 // CONFIG — edit these two lines for your target
 // ---------------------------------------------------------
-static const wchar_t* TARGET_PROCESS = L"game.exe";           // target process name
+static const wchar_t* TARGET_PROCESS = L"ac_client.exe";      // target process name
 static const char*    DLL_NAME       = "Internal Template.dll"; // DLL filename (same dir as injector)
 // ---------------------------------------------------------
 

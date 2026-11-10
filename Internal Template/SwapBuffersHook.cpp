@@ -13,8 +13,6 @@ BOOL WINAPI SwapBuffersHook::hookFunction(HDC hDc)
         GUI::initialize(hDc);
 
     // Run cheat logic every frame
-    if (g_cheats)
-        g_cheats->tick();
 
     // Draw GUI if visible
     if (GUI::initialized)
