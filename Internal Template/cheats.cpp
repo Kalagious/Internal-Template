@@ -5,13 +5,22 @@ Cheats::Cheats()
 {
     uninject = false;
 
-    // Construct features
+    // --- Module base addresses ---
+    // GetModuleHandle returns the base address of a loaded module in this process.
+    // Use this to calculate offsets: moduleBase + 0x1234 = absolute address.
+    moduleBase = (uintptr_t)GetModuleHandleA("ac_client.exe");
+    LOG("ac_client.exe base: %p", (void*)moduleBase);
+
+    // --- Game pointers ---
+    // localPlayer is stored as a static pointer at a fixed offset from the module base.
+    // Dereferencing it gives the address of the actual player object.
+    // Replace 0x10F4F4 with the real offset for your target (find it in Cheat Engine).
+    uintptr_t localPlayerPtr = moduleBase + 0x10F4F4;
+    localPlayer = *(uintptr_t*)localPlayerPtr;
+    LOG("localPlayer: %p", (void*)localPlayer);
+
+    // --- Construct features ---
     exampleFeature = new ExampleFeature();
-
-    
-
-	// Find any needed pointers here, e.g.: players, viewatrix, weapons
-
 
     LOG("Cheats: constructed");
 }

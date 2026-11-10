@@ -13,6 +13,12 @@ public:
 
     bool uninject;
 
+    // Module base addresses
+    uintptr_t moduleBase;   // ac_client.exe
+
+    // Game pointers — read from memory each tick or cache here
+    uintptr_t localPlayer;  // pointer to local player object
+
     // Feature instances — add one per feature
     ExampleFeature* exampleFeature;
 };
