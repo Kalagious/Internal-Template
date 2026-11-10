@@ -1,32 +1,18 @@
 #pragma once
-#include "screenmanager.h"
-#include "allmodules.h"
+#include "general.h"
 #include "module.h"
-#include "allclasses.h"
-#include "hookmanager.h"
-
-
+#include "features/ExampleFeature.h"
+// Add more feature headers here as you create them
 
 class Cheats {
 public:
-	Cheats();
-	void tick();
-	void keybinds();
-	void recalculateAddresses();
-	void cleanup();
+    Cheats();
+    void cheatUpdate();  // called every loop tick — runs all modules
+    void keybinds();
+    void cleanup();
 
-	bool uninject;
-	bool addressesAreValid;
+    bool uninject;
 
-	void* soTGameExe;
-	void* d3D11Dll;
-	//void* openGl32;
-
-	std::vector<Module*> modules;
-
-	HookManager* hookManager;
-	ScreenManager* screenManager;
-
-
-	Fly* fly;
+    // Feature instances — add one per feature
+    ExampleFeature* exampleFeature;
 };

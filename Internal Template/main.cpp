@@ -1,28 +1,27 @@
-#include "windows.h"
-#include "cheats.h"
 #include "general.h"
-#include <tlhelp32.h>
-#include <iostream>
-#include "hookmanager.h"
+#include "cheats.h"
+// #include "SwapBuffersHook.h"  // uncomment when ready to enable OpenGL hook
 
-Cheats* cheatsGlobal;
+Cheats* g_cheats = nullptr;
+// SwapBuffersHook* g_swapHook = nullptr;
 
 void mainCode(HMODULE hModule)
 {
+    LOG("mainCode: starting");
 
-	//Cheats cheats;
-	//cheatsGlobal = &cheats;
+    g_cheats = new Cheats();
 
-	//
-	//while (!cheats.uninject)
-	//{
-	//	cheats.tick();
-	//	if (GetAsyncKeyState(VK_END) & 0x01)
-	//		cheats.uninject = true;
-	//}
-	//cheats.cleanup();
+    // Main loop — runs until END key is pressed
+    while (!g_cheats->uninject)
+    {
+        g_cheats->cheatUpdate();
+    }
 
-	FreeLibraryAndExitThread(hModule, 0);
+    g_cheats->cleanup();
+    delete g_cheats;
+    g_cheats = nullptr;
+
+    LOG("mainCode: exiting");
+    Sleep(200);
+    FreeLibraryAndExitThread(hModule, 0);
 }
-
-

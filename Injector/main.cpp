@@ -1,87 +1,111 @@
-#include <iostream>
-#include <Windows.h>
-#include <TlHelp32.h>
-#include <fstream>
 #include <windows.h>
-#include <string>
+#include <TlHelp32.h>
 #include <iostream>
-#include <tchar.h>
-#include <stdlib.h>
+#include <string>
 #include <filesystem>
 
+// ---------------------------------------------------------
+// CONFIG — edit these two lines for your target
+// ---------------------------------------------------------
+static const wchar_t* TARGET_PROCESS = L"game.exe";           // target process name
+static const char*    DLL_NAME       = "Internal Template.dll"; // DLL filename (same dir as injector)
+// ---------------------------------------------------------
 
-
-bool fileExists(const std::string& name) {
-    std::ifstream f(name.c_str());
-    return f.good();
-}
-
-
-DWORD GetProcId(const wchar_t* procName)
+DWORD GetProcessId(const wchar_t* procName)
 {
-    DWORD procId = 0;
-    HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    DWORD pid = 0;
+    HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (snap == INVALID_HANDLE_VALUE) return 0;
 
-    if (hSnap != INVALID_HANDLE_VALUE)
+    PROCESSENTRY32W entry{ .dwSize = sizeof(entry) };
+    if (Process32FirstW(snap, &entry))
     {
-        PROCESSENTRY32 procEntry;
-        procEntry.dwSize = sizeof(procEntry);
-
-        if (Process32First(hSnap, &procEntry))
-        {
-            do
+        do {
+            if (_wcsicmp(entry.szExeFile, procName) == 0)
             {
-                if (!wcscmp(procEntry.szExeFile, procName))
-                {
-                    procId = procEntry.th32ProcessID;
-                    break;
-                }
-            } while (Process32Next(hSnap, &procEntry));
-        }
+                pid = entry.th32ProcessID;
+                break;
+            }
+        } while (Process32NextW(snap, &entry));
     }
-    CloseHandle(hSnap);
-    return procId;
+    CloseHandle(snap);
+    return pid;
 }
 
-uint32_t main()
+// Returns the full path to DLL_NAME sitting next to this injector exe
+std::string GetDllPath()
 {
-    char dllPath[512];
-    strcpy_s(dllPath, "C:\\Users\\Jordan\\Documents\\Cheats\\He's A Pirate\\x64\\Debug\\SoTInternal.dll");
+    char injectorPath[MAX_PATH]{};
+    GetModuleFileNameA(nullptr, injectorPath, MAX_PATH);
 
-    DWORD procId = 0;
+    std::filesystem::path p(injectorPath);
+    p = p.parent_path() / DLL_NAME;
+    return p.string();
+}
 
-    printf("Scanning for process...\n");
-    while (!procId)
+int main()
+{
+    std::string dllPath = GetDllPath();
+
+    printf("[*] DLL path : %s\n", dllPath.c_str());
+    printf("[*] Target   : %ls\n", TARGET_PROCESS);
+
+    // Verify the DLL actually exists before scanning
+    if (GetFileAttributesA(dllPath.c_str()) == INVALID_FILE_ATTRIBUTES)
     {
-        procId = GetProcId(L"SoTGame.exe");
-        Sleep(30);
+        printf("[!] DLL not found at path above. Place it next to the injector.\n");
+        system("pause");
+        return 1;
     }
 
-    HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, 0, procId);
-
-    if (hProc && hProc != INVALID_HANDLE_VALUE)
+    printf("[*] Waiting for process...\n");
+    DWORD pid = 0;
+    while (!pid)
     {
-        printf("Process has been found!\n");
-        void* loc = VirtualAllocEx(hProc, 0, MAX_PATH, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-        if (!loc) {
-            throw std::exception("VALLOC failed");
-        }
-        printf("Memory allocated at %#8X\n", (uintptr_t)loc);
+        pid = GetProcessId(TARGET_PROCESS);
+        Sleep(100);
+    }
+    printf("[*] Found PID %lu\n", pid);
 
-        WriteProcessMemory(hProc, loc, dllPath, strlen(dllPath) + 1, 0);
-        printf("DLL Path Written");
-
-        HANDLE hThread = CreateRemoteThread(hProc, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, loc, 0, 0);
-        printf("\nLibrary Loaded!\n");
-        if (hThread)
-        {
-            CloseHandle(hThread);
-        }
+    HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+    if (!hProc || hProc == INVALID_HANDLE_VALUE)
+    {
+        printf("[!] OpenProcess failed (%lu). Run as admin.\n", GetLastError());
+        system("pause");
+        return 1;
     }
 
-    if (hProc)
+    // Write the DLL path string into the target process
+    SIZE_T pathLen = dllPath.size() + 1;
+    void* remoteMem = VirtualAllocEx(hProc, nullptr, pathLen, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    if (!remoteMem)
     {
+        printf("[!] VirtualAllocEx failed (%lu)\n", GetLastError());
         CloseHandle(hProc);
+        system("pause");
+        return 1;
     }
+
+    WriteProcessMemory(hProc, remoteMem, dllPath.c_str(), pathLen, nullptr);
+
+    // Inject
+    HANDLE hThread = CreateRemoteThread(hProc, nullptr, 0,
+        (LPTHREAD_START_ROUTINE)LoadLibraryA, remoteMem, 0, nullptr);
+
+    if (hThread)
+    {
+        WaitForSingleObject(hThread, 5000);
+        CloseHandle(hThread);
+        printf("[*] Injected successfully!\n");
+    }
+    else
+    {
+        printf("[!] CreateRemoteThread failed (%lu)\n", GetLastError());
+    }
+
+    VirtualFreeEx(hProc, remoteMem, 0, MEM_RELEASE);
+    CloseHandle(hProc);
+
+    system("pause");
     return 0;
 }
