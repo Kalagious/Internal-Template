@@ -18,8 +18,10 @@ void mainCode(HMODULE hModule)
     }
 
     g_cheats->cleanup();
-
+    delete g_cheats;
+    g_cheats = nullptr;
 
     LOG("mainCode: exiting");
+    FreeConsole();
     FreeLibraryAndExitThread(hModule, 0);
 }
